@@ -16,7 +16,7 @@ const AboutPage = () => {
 
   return (
     <div
-      className={`container mx-auto mt-8 mb-10 ${
+      className={`bg-gray-100 p-8 ${
         loading ? 'opacity-0' : 'opacity-100 transition-all duration-500'
       }`}
     >
@@ -25,7 +25,7 @@ const AboutPage = () => {
           About Bloom Tile
         </h1>
 
-        <div className="flex flex-col lg:flex-row items-center justify-between mb-10 lg:space-x-12 p-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between lg:space-x-12 p-4">
           <div className="lg:w-1/2 mb-4 lg:mb-0">
             <img
               src={aboutImage}

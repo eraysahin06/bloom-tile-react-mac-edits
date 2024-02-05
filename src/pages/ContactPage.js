@@ -46,7 +46,7 @@ const ContactPage = () => {
 
   return (
     <div
-      className={`container mx-auto mt-8 mb-10 p-4 ${
+      className={`bg-gray-100 p-8 ${
         loading ? 'opacity-0' : 'opacity-100 transition-all duration-500'
       }`}
     >

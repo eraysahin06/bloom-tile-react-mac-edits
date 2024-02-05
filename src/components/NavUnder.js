@@ -18,7 +18,7 @@ const NavUnder = () => {
             <FaInstagram size={20} />
           </a>
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/company/bloom-tile"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white hover:text-blue-800"

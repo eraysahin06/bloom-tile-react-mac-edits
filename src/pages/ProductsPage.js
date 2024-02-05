@@ -27,8 +27,8 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-8 mb-10">
-      <h2 className="text-4xl font-bold mb-8">
+    <div className="bg-gray-100 w-full p-8">
+      <h2 className="text-4xl p-4 font-bold mb-8">
         {selectedCategory === 'All' ? 'All Products' : `${selectedCategory}`}
       </h2>
 

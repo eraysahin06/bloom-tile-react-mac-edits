@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
-import productsData from '../data/products';
+import axios from 'axios';
 
 const ProductsPage = () => {
+  const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('/api/products');
+        setProducts(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const categories = [
     'All',
-    ...new Set(productsData.map((product) => product.category)),
+    ...new Set(products.map((product) => product.category)),
   ];
 
   const filteredProducts =
     selectedCategory === 'All'
-      ? productsData
-      : productsData.filter((product) => product.category === selectedCategory);
-
-  useEffect(() => {
-    // Simulate loading delay
-    const timeoutId = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-
-    // Clear the timeout to avoid memory leaks
-    return () => clearTimeout(timeoutId);
-  }, []);
+      ? products
+      : products.filter((product) => product.category === selectedCategory);
 
   return (
     <div className="bg-gray-100 w-full p-8">

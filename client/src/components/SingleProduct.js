@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import products from '../data/products'; // Import your product data
 
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({ productId }) => {
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading delay
-    const timeoutId = setTimeout(() => {
-      setLoading(false);
-    }, 50);
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`/api/products/${productId}`);
+        setSelectedProduct(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
 
-    // Clear the timeout to avoid memory leaks
-    return () => clearTimeout(timeoutId);
-  }, []);
+    fetchProduct();
+  }, [productId]);
 
-  if (!product) {
+  if (!selectedProduct) {
     return <div>No product found</div>;
   }
 
-  const { name, description, code, image, category, size, finish } = product;
+  const { name, description, code, image, category, size, finish } = selectedProduct;
 
   // Get other products from the same category (excluding the current product)
   const relatedProducts = products.filter(
-    (p) => p.category === category && p.id !== product.id
+    (p) => p.category === category && p.id !== selectedProduct.id
   );
 
   return (

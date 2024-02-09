@@ -8,7 +8,6 @@ const productSchema = new mongoose.Schema({
     category: String,
     size: String,
     finish: String,
-});
-  
+})
+
 module.exports = mongoose.model('Product', productSchema);
-  

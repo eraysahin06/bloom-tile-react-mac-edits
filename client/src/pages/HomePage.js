@@ -5,6 +5,7 @@ import Showroom from '../components/Showroom';
 import Onestop from '../components/Onestop';
 import TopSection from '../components/TopSection';
 import ReviewsSection from '../components/ReviewSection';
+import '../App.css'
 
 const HomePage = () => {
   return (

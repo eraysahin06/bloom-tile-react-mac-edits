@@ -1,20 +1,24 @@
+// ProductsPage.js
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import axios from 'axios';
 
-const ProductsPage = () => {
+const ProductsPage = ({pro}) => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
+        const response = await axios.get('http://localhost:4000/api/products');
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        // Handle error
+        setError('An error occurred while fetching products.');
+        setLoading(false);
       }
     };
 
@@ -37,11 +41,14 @@ const ProductsPage = () => {
         {selectedCategory === 'All' ? 'All Products' : `${selectedCategory}`}
       </h2>
 
+      {/* Error message */}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+
       {/* Category Filter Section */}
       <div className="flex flex-wrap justify-center mb-6">
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <button
-            key={category}
+            key={index}
             className={`mx-2 my-2 px-4 py-2 rounded ${
               selectedCategory === category
                 ? 'bg-yellow-600 text-white'
@@ -56,21 +63,15 @@ const ProductsPage = () => {
 
       {/* Products Flex Container */}
       <div className="flex flex-wrap justify-center gap-8">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className={`transition-all duration-500 ${
-              loading ? 'opacity-0' : 'opacity-100'
-            }`}
-          >
-            <ProductCard
-              product={product}
-              singleProductStyle={
-                filteredProducts.length === 1 ? 'flex-grow-0' : 'flex-grow'
-              }
-            />
-          </div>
-        ))}
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          filteredProducts.map((product, index) => (
+            <div key={index} className="transition-all duration-500">
+              <ProductCard product={product} />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

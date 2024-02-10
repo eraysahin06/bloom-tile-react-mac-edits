@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './components/Navbar';
@@ -24,13 +24,13 @@ const AppRoot = () => (
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductsPage />} />
-            {/* Use the SingleProduct component for each product route */}
+            {/* Dynamically render SingleProduct component for each product */}
             {products.map((product) => (
-              <Route
-                key={product.id}
-                path={`/products/${product.id}`}
-                element={<SingleProduct product={product} />}
-              />
+            <Route
+            key={product.id}
+            path={`/products/${product.id}`}
+            element={<SingleProduct productId={product.id} />} // Pass productId as prop
+          />
             ))}
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
@@ -42,6 +42,6 @@ const AppRoot = () => (
   </React.StrictMode>
 );
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 root.render(<AppRoot />);
 reportWebVitals();

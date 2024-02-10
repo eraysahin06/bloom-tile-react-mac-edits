@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import products from '../data/products'; // Import your product data
 
 const SingleProduct = ({ productId }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/api/products/${productId}`);
+        const response = await axios.get(`http://localhost:4000/api/products/${productId}`);
         setSelectedProduct(response.data);
         setLoading(false);
       } catch (error) {
@@ -21,16 +21,30 @@ const SingleProduct = ({ productId }) => {
     fetchProduct();
   }, [productId]);
 
+  useEffect(() => {
+    const fetchRelatedProducts = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/products`);
+        const relatedProductsData = response.data.filter(
+          (p) => p.category === selectedProduct?.category && p._id !== productId
+        );
+        setRelatedProducts(relatedProductsData);
+      } catch (error) {
+        console.error('Error fetching related products:', error);
+      }
+    };
+  
+    if (selectedProduct && productId) {
+      fetchRelatedProducts();
+    }
+  }, [selectedProduct, productId]);
+  
+
   if (!selectedProduct) {
     return <div>No product found</div>;
   }
 
   const { name, description, code, image, category, size, finish } = selectedProduct;
-
-  // Get other products from the same category (excluding the current product)
-  const relatedProducts = products.filter(
-    (p) => p.category === category && p.id !== selectedProduct.id
-  );
 
   return (
     <div className="container mx-auto mt-8 mb-10 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -99,26 +113,26 @@ const SingleProduct = ({ productId }) => {
           Related Products
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4">
-          {relatedProducts.map((relatedProduct, index) => (
-            <div
-              key={relatedProduct.id}
-              className={`transition-all duration-500 ${
-                loading ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              <Link
-                to={`/products/${relatedProduct.id}`}
-                className="border border-gray-300 p-4 rounded-md flex flex-col items-center hover:bg-gray-100"
-              >
-                <img
-                  src={relatedProduct.image}
-                  alt={relatedProduct.name}
-                  className="w-30 h-16 object-cover rounded-md mb-2 cursor-pointer"
-                />
-                <p className="text-lg text-gray-800">{relatedProduct.name}</p>
-              </Link>
-            </div>
-          ))}
+        {relatedProducts.map((relatedProduct, index) => (
+  <div
+    key={relatedProduct._id} // Use _id instead of id
+    className={`transition-all duration-500 ${
+      loading ? 'opacity-0' : 'opacity-100'
+    }`}
+  >
+    <Link
+      to={`/products/${relatedProduct._id}`} // Use _id instead of id
+      className="border border-gray-300 p-4 rounded-md flex flex-col items-center hover:bg-gray-100"
+    >
+      <img
+        src={relatedProduct.image}
+        alt={relatedProduct.name}
+        className="w-30 h-16 object-cover rounded-md mb-2 cursor-pointer"
+      />
+      <p className="text-lg text-gray-800">{relatedProduct.name}</p>
+    </Link>
+  </div>
+))}
         </div>
       </div>
     </div>

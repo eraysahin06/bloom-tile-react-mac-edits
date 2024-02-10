@@ -12,6 +12,21 @@ router.get('/', async (req, res) => {
     }
 });
 
+// GET A SINGLE PRODUCT BY ID
+router.get('/:id', async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
 // ADD A NEW PRODUCT
 router.post('/', async (req, res) => {
     const product = new Product({

@@ -22,16 +22,13 @@ const AppRoot = () => (
             <NavUnder />
           </div>
           <Routes>
+            <Route path="*" element={<p>Path not resolved</p>} />
             <Route path="/" element={<HomePage />} />
             <Route path="/products" element={<ProductsPage />} />
-            {/* Dynamically render SingleProduct component for each product */}
-            {products.map((product) => (
             <Route
-            key={product.id}
-            path={`/products/${product.id}`}
-            element={<SingleProduct productId={product.id} />} // Pass productId as prop
-          />
-            ))}
+              path="/products/:id"
+              element={<SingleProduct />}
+            />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>

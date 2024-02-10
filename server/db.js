@@ -4,8 +4,9 @@ const cors = require('cors'); // Import the cors package
 require('dotenv').config();
 
 const app = express();
-// Middleware to parse JSON bodies
+
 app.use(express.json());
+
 
 // Allow all origins for CORS (you may want to restrict this in production)
 app.use(cors());

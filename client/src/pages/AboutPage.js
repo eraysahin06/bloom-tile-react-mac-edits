@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import aboutImage from '../assets/NewLogo.png';
-
+// UPDATE
 const AboutPage = () => {
   const [loading, setLoading] = useState(true);
 

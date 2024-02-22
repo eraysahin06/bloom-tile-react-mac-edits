@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const ServiceItem = ({ icon, title, description, image }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
+
   useEffect(() => {
     // Simulate a loading delay
     const timeoutId = setTimeout(() => {

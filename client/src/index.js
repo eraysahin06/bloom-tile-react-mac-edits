@@ -7,8 +7,7 @@ import NavUnder from './components/NavUnder';
 import HomePage from './pages/HomePage';
 import Footer from './components/Footer';
 import ProductsPage from './pages/ProductsPage';
-import SingleProduct from './components/SingleProduct'; // Import SingleProduct
-import products from './data/products';
+import SingleProduct from './components/SingleProduct';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 

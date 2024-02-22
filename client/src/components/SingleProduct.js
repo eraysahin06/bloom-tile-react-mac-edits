@@ -39,7 +39,7 @@ const SingleProduct = () => {
       <div className="transition-all duration-500 opacity-100">
         <Link
           to="/products"
-          className="text-yellow-600 text-2xl mb-8 block hover:underline"
+          className="text-yellow-500 text-2xl mb-8 block hover:underline"
         >
           &lt; Products
         </Link>
